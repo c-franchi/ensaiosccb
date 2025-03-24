@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hinoAberturaContainer) hinoAberturaContainer.classList.add('d-none');
     }
 
-        // adicionado para esconder palavra em ensaio local    
+    // adicionado para esconder palavra em ensaio local    
         const palavraContainer = document.getElementById('palavra-container');
     if (palavraContainer) {
         if (ccbEnsaioType === 'local') {
