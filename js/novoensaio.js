@@ -59,6 +59,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hinoAberturaContainer) hinoAberturaContainer.classList.add('d-none');
     }
 
+      // adicionado para esconder palavra em ensaio local
+      const palavraContainer = document.getElementById('palavra-container');
+    if (palavraContainer) {
+        if (ccbEnsaioType === 'local') {
+            palavraContainer.classList.add('d-none');
+        } else {
+            palavraContainer.classList.remove('d-none');
+        }
+    }
+
     // Configurar eventos de hinos
     const addHinoBtn = document.getElementById('add-hino-btn');
     const hinoInput = document.getElementById('hino-input');
