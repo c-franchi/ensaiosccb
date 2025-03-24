@@ -702,15 +702,15 @@ function salvarEnsaio() {
     const observacoesInput = document.getElementById('observacoes');
     const observacoes = observacoesInput ? observacoesInput.value.trim() : '';
 
-   // // Coletar dados da Palavra
-   // const palavraLivro = document.getElementById('palavra-livro');
-  //  const palavraCapitulo = document.getElementById('palavra-capitulo');
-  //  const palavraVersiculo = document.getElementById('palavra-versiculo');
+    // Coletar dados da Palavra
+    const palavraLivro = document.getElementById('palavra-livro');
+    const palavraCapitulo = document.getElementById('palavra-capitulo');
+    const palavraVersiculo = document.getElementById('palavra-versiculo');
     
-    //const palavra = {
-    //    livro: palavraLivro ? palavraLivro.value.trim() : '',
-    //    capitulo: palavraCapitulo ? palavraCapitulo.value.trim() : '',
-    //    versiculo: palavraVersiculo ? palavraVersiculo.value.trim() : ''
+    const palavra = {
+        livro: palavraLivro ? palavraLivro.value.trim() : '',
+        capitulo: palavraCapitulo ? palavraCapitulo.value.trim() : '',
+        versiculo: palavraVersiculo ? palavraVersiculo.value.trim() : ''
     };
 
     // Criar objeto do ensaio atualizado
