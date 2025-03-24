@@ -1,0 +1,335 @@
+/* Estilos gerais */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Ajustes para o card principal */
+.card {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 1rem;
+  border-radius: 10px 10px 0 0 !important;
+}
+
+/* Ajustes para as abas */
+.nav-tabs .nav-link {
+  color: #495057;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  font-weight: 500;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: transparent;
+  color: #0d6efd;
+}
+
+.nav-tabs .nav-link.active {
+  color: #0d6efd;
+  background-color: transparent;
+  border-bottom: 2px solid #0d6efd;
+}
+
+/* Ajustes para os inputs de contagem */
+.input-group > .form-control {
+  text-align: center;
+}
+
+.input-group > .btn {
+  min-width: 40px;
+}
+
+/* Ajustes para o progresso */
+.progress {
+  height: 30px !important;
+  margin-bottom: 5px;
+  background-color: #e9ecef;
+}
+
+.progress-bar {
+  line-height: 30px;
+  font-size: 14px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+.progress-stacked {
+  min-height: 30px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+/* Cores personalizadas para os naipes */
+.bg-cordas {
+  background-color: #0d6efd;
+}
+
+.bg-madeiras {
+  background-color: #198754;
+}
+
+.bg-metais {
+  background-color: #ffc107;
+}
+
+.bg-outros {
+  background-color: #0dcaf0;
+}
+
+/* Cores personalizadas para cada naipe */
+.progress-bar.bg-primary { background-color: #007bff !important; }
+.progress-bar.bg-success { background-color: #28a745 !important; }
+.progress-bar.bg-warning { background-color: #ffc107 !important; color: #000 !important; }
+.progress-bar.bg-info { background-color: #17a2b8 !important; }
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+  }
+  
+  .card {
+      margin-bottom: 20px;
+  }
+  
+  .input-group {
+      margin-bottom: 15px;
+  }
+
+  .input-group-contagem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+  }
+
+  .input-group-contagem .btn {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+  }
+
+  .input-group-contagem .form-control {
+      width: 60px;
+      text-align: center;
+      margin: 0 0.5rem;
+  }
+
+  .accordion-naipe .accordion-button {
+      padding: 1rem;
+      font-weight: 500;
+  }
+
+  .accordion-naipe .accordion-body {
+      padding: 1rem;
+  }
+
+  .nav-tabs .nav-link {
+      margin-right: 0.5rem;
+      padding: 0.5rem;
+  }
+}
+
+.alert {
+  margin-bottom: 20px;
+  border-radius: 0.25rem;
+}
+
+/* Estilos para o acordeão de naipes */
+.accordion-naipe {
+    margin-bottom: 1rem;
+}
+
+.accordion-naipe .accordion-button:not(.collapsed) {
+    background-color: #e7f1ff;
+    color: #0d6efd;
+}
+
+.accordion-naipe .accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0, 0, 0, 0.125);
+}
+
+/* Estilos para os hinos */
+.hino-item {
+    background-color: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.hino-item button {
+    margin-left: auto;
+}
+
+/* Toast personalizado */
+.toast-container {
+    z-index: 1050;
+}
+
+.toast {
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Estilos para a contagem de instrumentos */
+.contagem-input {
+    width: 50px !important;
+    padding: 0.25rem !important;
+    text-align: center;
+    margin: 0 0.25rem;
+}
+
+.instrumento-nome {
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.instrumento-contagem {
+    vertical-align: middle;
+}
+
+.instrumento-contagem .btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-borderless > tbody > tr > td {
+    padding: 0.5rem 0;
+    border: none;
+}
+
+/* Ajustes responsivos para a contagem */
+@media (max-width: 768px) {
+    .contagem-input {
+        width: 40px !important;
+    }
+
+    .instrumento-contagem .btn {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
+
+    .instrumento-nome {
+        font-size: 0.9rem;
+    }
+    
+    .table-responsive {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .accordion-body {
+        padding: 0.75rem;
+    }
+}
+
+/* Formulários */
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Botões */
+.btn {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5c636a;
+    border-color: #565e64;
+}
+
+/* Animações */
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+}
+
+/* Utilitários */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Cores personalizadas */
+.bg-light-blue {
+    background-color: #e7f1ff;
+}
+
+.text-light-blue {
+    color: #0d6efd;
+}
+
+/* Loading e Error messages */
+.alert-info {
+    background-color: #cfe2ff;
+    border-color: #b6d4fe;
+    color: #084298;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    color: #842029;
+}

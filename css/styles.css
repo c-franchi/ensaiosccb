@@ -1,0 +1,43 @@
+/* Estilos gerais */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Estilos do card */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Estilos dos botões */
+.btn-group {
+    gap: 0.5rem;
+}
+
+/* Estilos dos inputs */
+.input-group {
+    max-width: 200px;
+}
+
+/* Estilos da lista de hinos */
+#hinos-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Estilos do acordeon */
+.accordion-button:not(.collapsed) {
+    background-color: #e9ecef;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .input-group {
+        max-width: 100%;
+    }
+} 

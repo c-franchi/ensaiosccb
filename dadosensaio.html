@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados do Ensaio - CCB Ensaios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h2 class="mb-0">Dados do Ensaio</h2>
+                        <p class="text-muted mb-0" id="localidade-info"></p>
+                    </div>
+                    <div class="card-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs mb-3" id="ensaioTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="dados-tab" data-bs-toggle="tab" data-bs-target="#dados" type="button" role="tab" aria-controls="dados" aria-selected="true">
+                                    Dados do Ensaio
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="contagem-tab" data-bs-toggle="tab" data-bs-target="#contagem" type="button" role="tab" aria-controls="contagem" aria-selected="false">
+          Contagem
+        </button>
+      </li>
+                            <li class="nav-item" role="presentation" id="hinos-tab-item">
+        <button class="nav-link" id="hinos-tab" data-bs-toggle="tab" data-bs-target="#hinos" type="button" role="tab" aria-controls="hinos" aria-selected="false">
+          Hinos
+        </button>
+      </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="demais-presencas-tab" data-bs-toggle="tab" href="#demais-presencas" role="tab">Demais Presenças</a>
+                            </li>
+    </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <!-- Aba Dados do Ensaio -->
+                            <div class="tab-pane fade show active" id="dados" role="tabpanel" aria-labelledby="dados-tab">
+                                <form id="ensaio-form">
+                                    <div class="mb-3">
+                                        <label for="data" class="form-label">Data do Ensaio</label>
+                                        <input type="date" class="form-control" id="data" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="igreja" class="form-label">Igreja</label>
+                                        <input type="text" class="form-control" id="igreja" readonly>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="card-title mb-0">Palavra</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="palavra-livro">Livro</label>
+                                                                <input type="text" class="form-control" id="palavra-livro" placeholder="Ex: João">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="palavra-capitulo">Capítulo</label>
+                                                                <input type="number" class="form-control" id="palavra-capitulo" placeholder="Ex: 3">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="palavra-versiculo">Versículo</label>
+                                                                <input type="number" class="form-control" id="palavra-versiculo" placeholder="Ex: 16">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Campos específicos para Ensaio Regional -->
+                                    <div id="campos-regional">
+          <div class="mb-3">
+                                            <label for="atendimento-anciao" class="form-label">Atendimento Ancião</label>
+                                            <input type="text" class="form-control" id="atendimento-anciao">
+          </div>
+          <div class="mb-3">
+                                            <label for="regencia1" class="form-label">Regência Regional 1</label>
+                                            <input type="text" class="form-control" id="regencia1">
+          </div>
+          <div class="mb-3">
+                                            <label for="regencia2" class="form-label">Regência Regional 2</label>
+                                            <input type="text" class="form-control" id="regencia2">
+          </div>
+          <div class="mb-3">
+                                            <label for="examinadora" class="form-label">Examinadora</label>
+                                            <input type="text" class="form-control" id="examinadora">
+                                        </div>
+                                    </div>
+
+                                    <!-- Campos específicos para Ensaio Local -->
+                                    <div id="campos-local" class="d-none">
+                                        <div class="mb-3">
+                                            <label for="atendimento-ensaio" class="form-label">Atendimento Ensaio</label>
+                                            <input type="text" class="form-control" id="atendimento-ensaio">
+          </div>
+          <div class="mb-3">
+                                            <label for="regencia-local1" class="form-label">Regência Regional/Local 1</label>
+                                            <input type="text" class="form-control" id="regencia-local1">
+          </div>
+                                        <div class="mb-3">
+                                            <label for="regencia-local2" class="form-label">Regência Regional/Local 2</label>
+                                            <input type="text" class="form-control" id="regencia-local2">
+        </div>
+      </div>
+                                </form>
+                            </div>
+
+      <!-- Aba Contagem -->
+      <div class="tab-pane fade" id="contagem" role="tabpanel" aria-labelledby="contagem-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="accordion" id="instrumentosAccordionCol1">
+                                            <!-- Cordas -->
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cordas-section">
+                                                        Cordas
+                                                    </button>
+                                                </h2>
+                                                <div id="cordas-section" class="accordion-collapse collapse show" data-bs-parent="#instrumentosAccordionCol1">
+                                                    <div class="accordion-body">
+                                                        <div class="row g-3">
+                                                            <div class="col-6">
+                                                                <label class="form-label">Violino</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('violino')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="violino" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('violino')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Viola</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('viola')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="viola" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('viola')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Violoncelo</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('violoncelo')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="violoncelo" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('violoncelo')">+</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Madeiras -->
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#madeiras-section">
+                                                        Madeiras
+                                                    </button>
+                                                </h2>
+                                                <div id="madeiras-section" class="accordion-collapse collapse" data-bs-parent="#instrumentosAccordionCol1">
+                                                    <div class="accordion-body">
+                                                        <div class="row g-3">
+                                                            <div class="col-6">
+                                                                <label class="form-label">Flauta</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('flauta')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="flauta" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('flauta')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Oboé</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('oboe')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="oboe" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('oboe')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Oboé D'Amore</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('oboeAmore')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="oboeAmore" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('oboeAmore')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Corne Inglês</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('corneIngles')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="corneIngles" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('corneIngles')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Clarinete</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('clarinete')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="clarinete" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('clarinete')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Clarinete Alto</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('clarineteAlto')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="clarineteAlto" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('clarineteAlto')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Clarinete Baixo</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('clarineteBaixo')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="clarineteBaixo" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('clarineteBaixo')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Fagote</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('fagote')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="fagote" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('fagote')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Saxofone Soprano</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('saxSoprano')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="saxSoprano" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('saxSoprano')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Saxofone Alto</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('saxAlto')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="saxAlto" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('saxAlto')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Saxofone Tenor</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('saxTenor')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="saxTenor" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('saxTenor')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Saxofone Barítono</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('saxBaritono')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="saxBaritono" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('saxBaritono')">+</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="accordion" id="instrumentosAccordionCol2">
+                                            <!-- Metais -->
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#metais-section">
+                                                        Metais
+                                                    </button>
+                                                </h2>
+                                                <div id="metais-section" class="accordion-collapse collapse" data-bs-parent="#instrumentosAccordionCol2">
+                                                    <div class="accordion-body">
+                                                        <div class="row g-3">
+                                                            <div class="col-6">
+                                                                <label class="form-label">Trompete / Cornet</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('trompete')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="trompete" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('trompete')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Flugelhorn</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('flugelhorn')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="flugelhorn" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('flugelhorn')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Trompa</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('trompa')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="trompa" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('trompa')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Trombone / Trombonito</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('trombone')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="trombone" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('trombone')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Barítono</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('baritono')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="baritono" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('baritono')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Eufônio</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('eufonio')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="eufonio" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('eufonio')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Tuba</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('tuba')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="tuba" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('tuba')">+</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Outros -->
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#outros-section">
+                                                        Outros
+                                                    </button>
+                                                </h2>
+                                                <div id="outros-section" class="accordion-collapse collapse show" data-bs-parent="#instrumentosAccordionCol2">
+                                                    <div class="accordion-body">
+                                                        <div class="row g-3">
+                                                            <div class="col-6">
+                                                                <label class="form-label">Organistas</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('organistas')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="organistas" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('organistas')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Acordeon</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('acordeon')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="acordeon" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('acordeon')">+</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <label class="form-label">Não inclusos no MOO</label>
+                                                                <div class="input-group">
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement('nao-inclusos')">-</button>
+                                                                    <input type="text" class="form-control text-center" id="nao-inclusos" value="0" readonly>
+                                                                    <button class="btn btn-outline-secondary" type="button" onclick="increment('nao-inclusos')">+</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Aba Hinos -->
+                            <div class="tab-pane fade" id="hinos" role="tabpanel" aria-labelledby="hinos-tab">
+                                <!-- Campo de Hino de Abertura (apenas para ensaios regionais) -->
+                                <div id="hino-abertura-container" class="mb-3">
+                                    <label for="hino-abertura" class="form-label">Hino de Abertura</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="hino-abertura" placeholder="Número do hino">
+                                        <button class="btn btn-outline-primary" type="button" id="add-hino-abertura-btn">Adicionar</button>
+            </div>
+          </div>
+                                <div class="mb-3">
+                                    <label for="hino-input" class="form-label">Adicionar Hino</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="hino-input" placeholder="Número do hino">
+                                        <button class="btn btn-outline-primary" type="button" id="add-hino-btn">Adicionar</button>
+            </div>
+          </div>
+                                <ul class="list-group" id="hinos-list">
+                                    <!-- Hinos serão adicionados aqui -->
+                                </ul>
+                            </div>
+
+                            <!-- Aba Demais Presenças -->
+                            <div class="tab-pane fade" id="demais-presencas" role="tabpanel">
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Anciãos</h5>
+                                            </div>
+                                            <div class="card-body">
+            <div class="input-group mb-3">
+                                                    <input type="text" id="anciao-input" class="form-control" placeholder="Nome do Ancião">
+                                                    <button class="btn btn-primary" type="button" id="add-anciao-btn">Adicionar</button>
+                                                </div>
+                                                <ul class="list-group" id="ancioes-list"></ul>
+                                            </div>
+            </div>
+          </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Encarregados Regionais</h5>
+                                            </div>
+                                            <div class="card-body">
+            <div class="input-group mb-3">
+                                                    <input type="text" id="enc-regional-input" class="form-control" placeholder="Nome do Encarregado">
+                                                    <button class="btn btn-primary" type="button" id="add-enc-regional-btn">Adicionar</button>
+                                                </div>
+                                                <ul class="list-group" id="enc-regionais-list"></ul>
+            </div>
+          </div>
+        </div>
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Examinadoras</h5>
+                                            </div>
+                                            <div class="card-body">
+            <div class="input-group mb-3">
+                                                    <input type="text" id="examinadora-input" class="form-control" placeholder="Nome da Examinadora">
+                                                    <button class="btn btn-primary" type="button" id="add-examinadora-btn">Adicionar</button>
+                                                </div>
+                                                <ul class="list-group" id="examinadoras-list"></ul>
+                                            </div>
+                                        </div>
+            </div>
+          </div>
+                                <div class="row mt-3">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title mb-0">Observações</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <textarea id="observacoes" class="form-control" rows="4" placeholder="Digite aqui as observações..."></textarea>
+            </div>
+          </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+                        <!-- Botões de ação -->
+                        <div class="d-grid gap-2 mt-3">
+                            <div id="status-message" class="alert alert-info d-none">Carregando dados...</div>
+                            <button type="button" class="btn btn-primary" onclick="salvarAlteracoes()">Salvar Alterações</button>
+                            <button type="button" class="btn btn-warning" onclick="location.reload()">Recarregar Página</button>
+                            <a href="eventos.html" class="btn btn-secondary">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+  </div>
+
+    <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="js/dadosensaio.js"></script>
+</body>
+</html>

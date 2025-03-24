@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - CCB Ensaios</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-header text-center">
+            <h2 class="mb-0">CCB Ensaios</h2>
+          </div>
+          <div class="card-body">
+            <form id="login-form">
+              <!-- Tipo de Ensaio -->
+              <div class="mb-3">
+                <label for="ensaioType" class="form-label">Tipo de Ensaio</label>
+                <select class="form-select" id="ensaioType" required>
+                  <option value="">Selecione o tipo de ensaio</option>
+                  <option value="regional">Ensaio Regional</option>
+                  <option value="local">Ensaio Local</option>
+                </select>
+              </div>
+
+              <!-- Grupo Regional -->
+              <div id="regional-group" class="mb-3 d-none">
+                <label for="regional-select" class="form-label">Cidade/Região</label>
+                <select class="form-select" id="regional-select">
+                  <option value="">Selecione a cidade/região</option>
+                  <option value="BR-SP-AMÉRICO BRASILIENSE">Américo Brasiliense</option>
+                  <option value="BR-SP-ARARAQUARA">Araraquara</option>
+                  <option value="BR-SP-BOA ESPERANÇA DO SUL">Boa Esperança do Sul</option>
+                  <option value="BR-SP-GAVIÃO PEIXOTO">Gavião Peixoto</option>
+                  <option value="BR-SP-IBATÉ">Ibaté</option>
+                  <option value="BR-SP-MATÃO">Matão</option>
+                  <option value="BR-SP-MOTUCA">Motuca</option>
+                  <option value="BR-SP-NOVA EUROPA">Nova Europa</option>
+                  <option value="BR-SP-RINCÃO">Rincão</option>
+                  <option value="BR-SP-SANTA LÚCIA">Santa Lúcia</option>
+                  <option value="BR-SP-TRABIJU">Trabiju</option>
+                </select>
+              </div>
+
+              <!-- Grupo Local -->
+              <div id="local-group" class="mb-3 d-none">
+                <label for="local-select" class="form-label">Comum</label>
+                <select class="form-select" id="local-select">
+                  <option value="">Selecione a comum</option>
+                  <option value="AMÉRICO BRASILIENSE - CENTRAL - SÃO JOSÉ">Américo Brasiliense - Central - São José</option>
+                  <option value="AMÉRICO BRASILIENSE - CENTRO">Américo Brasiliense - Centro</option>
+                  <option value="AMÉRICO BRASILIENSE - VISTA ALEGRE">Américo Brasiliense - Vista Alegre</option>
+                  <option value="ARARAQUARA - ADALBERTO ROXO">Araraquara - Adalberto Roxo</option>
+                  <option value="ARARAQUARA - ASS. MONTE ALEGRE II">Araraquara - Ass. Monte Alegre II</option>
+                  <option value="ARARAQUARA - ASS. MONTE ALEGRE IV">Araraquara - Ass. Monte Alegre IV</option>
+                  <option value="ARARAQUARA - ASSENTAMENTO BELA VISTA">Araraquara - Assentamento Bela Vista</option>
+                  <option value="ARARAQUARA - CARMO">Araraquara - Carmo</option>
+                  <option value="ARARAQUARA - CHÁCARA FLORA">Araraquara - Chácara Flora</option>
+                  <option value="ARARAQUARA - CONDOMÍNIO SATÉLITE">Araraquara - Condomínio Satélite</option>
+                  <option value="ARARAQUARA - D. BUENO DE ANDRADA">Araraquara - D. Bueno de Andrada</option>
+                  <option value="ARARAQUARA - ESTRELA KANASHIRO">Araraquara - Estrela Kanashiro</option>
+                  <option value="ARARAQUARA - JARDIM BRASIL">Araraquara - Jardim Brasil</option>
+                  <option value="ARARAQUARA - JARDIM DAS ESTAÇÕES">Araraquara - Jardim das Estações</option>
+                  <option value="ARARAQUARA - JARDIM DAS FLORES">Araraquara - Jardim das Flores</option>
+                  <option value="ARARAQUARA - JARDIM DEL REI">Araraquara - Jardim Del Rei</option>
+                  <option value="ARARAQUARA - JARDIM ITÁLIA">Araraquara - Jardim Itália</option>
+                  <option value="ARARAQUARA - JARDIM MARIA LUIZA">Araraquara - Jardim Maria Luiza</option>
+                  <option value="ARARAQUARA - JARDIM PAULISTANO">Araraquara - Jardim Paulistano</option>
+                  <option value="ARARAQUARA - JARDIM PINHEIROS">Araraquara - Jardim Pinheiros</option>
+                  <option value="ARARAQUARA - JARDIM SANTA ANGELINA">Araraquara - Jardim Santa Angelina</option>
+                  <option value="ARARAQUARA - JARDIM SELMI DEI SETOR 05">Araraquara - Jardim Selmi Dei Setor 05</option>
+                  <option value="ARARAQUARA - JARDIM VALE DO SOL">Araraquara - Jardim Vale do Sol</option>
+                  <option value="ARARAQUARA - PARQUE DAS HORTÊNCIAS">Araraquara - Parque das Hortências</option>
+                  <option value="ARARAQUARA - PARQUE RES. IGUATEMI">Araraquara - Parque Res. Iguatemi</option>
+                  <option value="ARARAQUARA - PARQUE SÃO PAULO">Araraquara - Parque São Paulo</option>
+                  <option value="ARARAQUARA - PORTAL DAS LARANJEIRAS">Araraquara - Portal das Laranjeiras</option>
+                  <option value="ARARAQUARA - RECANTO DAS ACÁCIAS / GRAMADO">Araraquara - Recanto das Acácias / Gramado</option>
+                  <option value="ARARAQUARA - RECREIO CAMPESTRE / IMPERADOR / INDAIÁ">Araraquara - Recreio Campestre / Imperador / Indaiá</option>
+                  <option value="ARARAQUARA - SANTANA">Araraquara - Santana</option>
+                  <option value="ARARAQUARA - VILA MELHADO">Araraquara - Vila Melhado</option>
+                  <option value="ARARAQUARA - VILA XAVIER - CENTRAL">Araraquara - Vila Xavier - Central</option>
+                  <option value="BOA ESPERANÇA DO SUL - CENTRAL">Boa Esperança do Sul - Central</option>
+                  <option value="BOA ESPERANÇA DO SUL - PALMEIRA II">Boa Esperança do Sul - Palmeira II</option>
+                  <option value="GAVIÃO PEIXOTO - CENTRAL">Gavião Peixoto - Central</option>
+                  <option value="IBATÉ - AV. SÃO JOÃO">Ibaté - Av. São João</option>
+                  <option value="IBATÉ - CENTRAL">Ibaté - Central</option>
+                  <option value="IBATÉ - JD. ENCANTO DO PLANALTO">Ibaté - Jd. Encanto do Planalto</option>
+                  <option value="IBATÉ - JD. MENZANI">Ibaté - Jd. Menzani</option>
+                  <option value="IBATÉ - JD. N. S. APARECIDA">Ibaté - Jd. N. S. Aparecida</option>
+                  <option value="MOTUCA - CENTRAL">Motuca - Central</option>
+                  <option value="NOVA EUROPA - 13 DE MAIO">Nova Europa - 13 de Maio</option>
+                  <option value="NOVA EUROPA - CENTRAL">Nova Europa - Central</option>
+                  <option value="RINCÃO - CENTRAL">Rincão - Central</option>
+                  <option value="RINCÃO - RESIDENCIAL ALVORADA">Rincão - Residencial Alvorada</option>
+                  <option value="RINCÃO - TAQUARAL">Rincão - Taquaral</option>
+                  <option value="SANTA LÚCIA - CENTRAL">Santa Lúcia - Central</option>
+                  <option value="SANTA LÚCIA - NOVA SANTA LÚCIA">Santa Lúcia - Nova Santa Lúcia</option>
+                  <option value="TRABIJU - CENTRAL">Trabiju - Central</option>
+                </select>
+              </div>
+
+              <!-- Botão Entrar -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Script da página de login -->
+  <script src="js/login.js"></script>
+</body>
+</html>

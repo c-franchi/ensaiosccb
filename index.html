@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CCB - Ensaios Regionais</title>
+  <!-- Bootstrap CSS via CDN -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- CSS customizado -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-primary text-white" id="sidebar-wrapper">
+      <div class="sidebar-heading p-3 fs-5 fw-bold">
+        CCB - Ensaios Regionais
+      </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" id="menu-inicio">Início</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" id="menu-novo">Novo Ensaio</a>
+        <a href="#" class="list-group-item list-group-item-action bg-primary text-white" id="menu-config">Configurações</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container-fluid">
+          <button class="btn btn-primary" id="menu-toggle">☰</button>
+          <span class="ms-3 fw-bold">NOVA EUROPA - CENTRAL</span>
+        </div>
+      </nav>
+
+      <div class="container-fluid mt-4">
+        <!-- Título da página -->
+        <h2>Início</h2>
+        <!-- Cards de Resumo -->
+        <div class="row g-3 mt-3">
+          <div class="col-md-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <h6 class="card-title">Total de Ensaios</h6>
+                <h4 id="total-ensaios" class="fw-bold text-primary">0</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <h6 class="card-title">Músicos no Último Ensaio</h6>
+                <h4 id="musicos-ultimo" class="fw-bold text-success">0</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <h6 class="card-title">Último Ensaio</h6>
+                <h4 id="ultimo-ensaio" class="fw-bold text-warning">--</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <h6 class="card-title">Naipe Destaque</h6>
+                <h4 id="naipe-destaque" class="fw-bold text-danger">--</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Distribuição de Naipes (Percentual) -->
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header fw-bold">Distribuição de Naipes (Último Ensaio)</div>
+              <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    Cordas: <span id="perc-cordas">0%</span>
+                  </li>
+                  <li class="list-group-item">
+                    Madeiras: <span id="perc-madeiras">0%</span>
+                  </li>
+                  <li class="list-group-item">
+                    Metais: <span id="perc-metais">0%</span>
+                  </li>
+                  <li class="list-group-item">
+                    Outros: <span id="perc-outros">0%</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ensaios Recentes -->
+        <div class="mt-4">
+          <h4>Ensaios Recentes</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Local</th>
+                <th>Ministério Presente</th>
+                <th>Total de Músicos</th>
+              </tr>
+            </thead>
+            <tbody id="ensaios-recentes"></tbody>
+          </table>
+          <p id="nenhum-ensaio" class="text-muted">Nenhum ensaio registrado para esta igreja.</p>
+        </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap JS Bundle (inclui Popper) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  <!-- Script Principal -->
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Ensaio</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            font-size: 16pt;
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+        }
+        .header h2 {
+            font-size: 14pt;
+            margin: 5px 0;
+            padding: 0;
+            font-weight: bold;
+        }
+        .header p {
+            margin: 2px 0;
+            font-size: 12pt;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            font-size: 10pt;
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 4px 8px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+        }
+        .width-10 {
+            width: 10%;
+        }
+        .width-15 {
+            width: 15%;
+        }
+        .width-20 {
+            width: 20%;
+        }
+        .width-25 {
+            width: 25%;
+        }
+        .width-30 {
+            width: 30%;
+        }
+        .width-40 {
+            width: 40%;
+        }
+        .width-50 {
+            width: 50%;
+        }
+        .width-60 {
+            width: 60%;
+        }
+        .width-70 {
+            width: 70%;
+        }
+        .yellow-bg {
+            background-color: #FFFFCC;
+        }
+        .align-center {
+            text-align: center;
+        }
+        .align-right {
+            text-align: right;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .no-border-bottom {
+            border-bottom: none;
+        }
+        .no-border-top {
+            border-top: none;
+        }
+        .border-right {
+            border-right: 2px solid black;
+        }
+        .info-section {
+            margin-bottom: 10px;
+        }
+        .sub-title {
+            font-weight: bold;
+            margin-top: 8px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CONGREGAÇÃO CRISTÃ NO BRASIL</h1>
+            <h2>BR-SP-{{localidade}}</h2>
+            <p>Data: {{data}}</p>
+        </div>
+
+        <div class="info-section">
+            <table>
+                <tr>
+                    <th class="width-30">Atendimento</th>
+                    <th class="width-30 border-right">Regência</th>
+                    <th class="width-40">Demais Irmãos Presentes</th>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>Ancião:</strong> {{atendimentoAnciao}}</p>
+                    </td>
+                    <td class="border-right">
+                        <p><strong>Regional 1:</strong> {{regencia1}}</p>
+                        <p><strong>Regional 2:</strong> {{regencia2}}</p>
+                    </td>
+                    <td>
+                        <p><strong>Anciãos:</strong> <span id="anciaos">{{demaisAncioes}}</span></p>
+                        <p><strong>Enc. Regionais:</strong> <span id="enc-regionais">{{demaisEncRegionais}}</span></p>
+                        <p><strong>Examinadoras:</strong> <span id="examinadoras-outros">{{demaisExaminadoras}}</span></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="info-section">
+            <table>
+                <tr>
+                    <th colspan="4">Instrumentos</th>
+                </tr>
+                <tr>
+                    <th>Naipes</th>
+                    <th>Instrumentos</th>
+                    <th class="width-15">Qtde Naipe</th>
+                    <th class="width-15">%</th>
+                </tr>
+                <tr>
+                    <td rowspan="4" class="align-center bold">Cordas</td>
+                    <td>Violino</td>
+                    <td class="align-center">{{violino}}</td>
+                    <td class="align-center" rowspan="4">{{percentualCordas}}%</td>
+                </tr>
+                <tr>
+                    <td>Viola</td>
+                    <td class="align-center">{{viola}}</td>
+                </tr>
+                <tr>
+                    <td>Violoncelo</td>
+                    <td class="align-center">{{violoncelo}}</td>
+                </tr>
+                <tr>
+                    <td>Contrabaixo</td>
+                    <td class="align-center">{{contrabaixo}}</td>
+                </tr>
+                <tr>
+                    <td class="align-center bold">Total Cordas</td>
+                    <td></td>
+                    <td class="align-center bold">{{totalCordas}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="4" class="align-center bold">Madeiras</td>
+                    <td>Flauta</td>
+                    <td class="align-center">{{flauta}}</td>
+                    <td class="align-center" rowspan="4">{{percentualMadeiras}}%</td>
+                </tr>
+                <tr>
+                    <td>Clarinete</td>
+                    <td class="align-center">{{clarinete}}</td>
+                </tr>
+                <tr>
+                    <td>Oboé</td>
+                    <td class="align-center">{{oboe}}</td>
+                </tr>
+                <tr>
+                    <td>Fagote</td>
+                    <td class="align-center">{{fagote}}</td>
+                </tr>
+                <tr>
+                    <td rowspan="3" class="align-center bold yellow-bg">Saxofones</td>
+                    <td class="yellow-bg">Sax Alto</td>
+                    <td class="align-center yellow-bg">{{saxAlto}}</td>
+                    <td class="align-center yellow-bg" rowspan="3"></td>
+                </tr>
+                <tr>
+                    <td class="yellow-bg">Sax Tenor</td>
+                    <td class="align-center yellow-bg">{{saxTenor}}</td>
+                </tr>
+                <tr>
+                    <td class="yellow-bg">Sax Barítono</td>
+                    <td class="align-center yellow-bg">{{saxBaritono}}</td>
+                </tr>
+                <tr>
+                    <td class="align-center bold">Total Madeiras</td>
+                    <td></td>
+                    <td class="align-center bold">{{totalMadeiras}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="6" class="align-center bold">Metais</td>
+                    <td>Trompete</td>
+                    <td class="align-center">{{trompete}}</td>
+                    <td class="align-center" rowspan="6">{{percentualMetais}}%</td>
+                </tr>
+                <tr>
+                    <td>Flugelhorn</td>
+                    <td class="align-center">{{flugelhorn}}</td>
+                </tr>
+                <tr>
+                    <td>Trompa</td>
+                    <td class="align-center">{{trompa}}</td>
+                </tr>
+                <tr>
+                    <td>Trombone</td>
+                    <td class="align-center">{{trombone}}</td>
+                </tr>
+                <tr>
+                    <td>Bombardino</td>
+                    <td class="align-center">{{bombardino}}</td>
+                </tr>
+                <tr>
+                    <td>Tuba</td>
+                    <td class="align-center">{{tuba}}</td>
+                </tr>
+                <tr>
+                    <td class="align-center bold">Total Metais</td>
+                    <td></td>
+                    <td class="align-center bold">{{totalMetais}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="align-center bold">Outros</td>
+                    <td>Acordeon</td>
+                    <td class="align-center">{{acordeon}}</td>
+                    <td class="align-center">{{percentualOutros}}%</td>
+                </tr>
+                <tr>
+                    <td class="align-center bold">Não Inclusos</td>
+                    <td></td>
+                    <td class="align-center">{{naoInclusos}}</td>
+                    <td class="align-center">{{percentualNaoInclusos}}%</td>
+                </tr>
+                <tr>
+                    <td class="align-center bold" colspan="2">Total Instrumentistas</td>
+                    <td class="align-center bold">{{totalInstrumentos}}</td>
+                    <td class="align-center bold">100%</td>
+                </tr>
+                <tr>
+                    <td class="align-center bold yellow-bg" colspan="2">Organistas</td>
+                    <td class="align-center bold yellow-bg">{{organistas}}</td>
+                    <td class="align-center bold yellow-bg"></td>
+                </tr>
+                <tr>
+                    <td class="align-center bold" colspan="2">Total Geral</td>
+                    <td class="align-center bold">{{totalGeral}}</td>
+                    <td class="align-center bold"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="info-section">
+            <table>
+                <tr>
+                    <th colspan="3">Palavra</th>
+                </tr>
+                <tr>
+                    <th class="width-50">Livro</th>
+                    <th class="width-25">Capítulo</th>
+                    <th class="width-25">Versículos</th>
+                </tr>
+                <tr>
+                    <td id="palavra-livro"></td>
+                    <td id="palavra-capitulo" class="align-center"></td>
+                    <td id="palavra-versiculo" class="align-center"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="info-section">
+            <table>
+                <tr>
+                    <th colspan="3">Hinos</th>
+                </tr>
+                <tr>
+                    <th class="width-60">Cantados</th>
+                    <th class="width-20">Ensaiados</th>
+                    <th class="width-20">Total</th>
+                </tr>
+                <tr>
+                    <td id="hinos-cantados"></td>
+                    <td id="hinos-ensaiados" class="align-center"></td>
+                    <td id="total-hinos-ensaiados" class="align-center"></td>
+                </tr>
+            </table>
+            <div id="lista-hinos" class="sub-title">
+                <!-- Lista detalhada de hinos será preenchida via JavaScript -->
+            </div>
+        </div>
+
+        <div class="info-section">
+            <table>
+                <tr>
+                    <th>Observações</th>
+                </tr>
+                <tr>
+                    <td id="observacoes-print" style="height: 70px; vertical-align: top;"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html> 
