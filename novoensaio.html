@@ -117,12 +117,36 @@
                       <input type="text" class="form-control" id="atendimento-ensaio" />
                     </div>
                     <div class="mb-3">
-                      <label for="regencia-local1" class="form-label">Regência Regional/Local 1</label>
-                      <input type="text" class="form-control" id="regencia-local1" />
+                      <label for="regencia-local1" class="form-label">Regência 1</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="regencia-local1" placeholder="Nome do Regente">
+                        <div class="input-group-text">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="tipo-regencia1" id="regencia1-regional" value="regional" checked>
+                            <label class="form-check-label" for="regencia1-regional">Regional</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="tipo-regencia1" id="regencia1-local" value="local">
+                            <label class="form-check-label" for="regencia1-local">Local</label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div class="mb-3">
-                      <label for="regencia-local2" class="form-label">Regência Regional/Local 2</label>
-                      <input type="text" class="form-control" id="regencia-local2" />
+                      <label for="regencia-local2" class="form-label">Regência 2</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="regencia-local2" placeholder="Nome do Regente">
+                        <div class="input-group-text">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="tipo-regencia2" id="regencia2-regional" value="regional" checked>
+                            <label class="form-check-label" for="regencia2-regional">Regional</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="tipo-regencia2" id="regencia2-local" value="local">
+                            <label class="form-check-label" for="regencia2-local">Local</label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -437,14 +461,24 @@
                       <ul class="list-group mt-2" id="ancioes-list"></ul>
                     </div>
 
-                    <!-- Encarregados Regionais -->
+                    <!-- Encarregados -->
                     <div class="mb-3">
-                      <label class="form-label">Encarregados Regionais</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control" id="enc-regional-input">
-                        <button type="button" class="btn btn-primary" id="add-enc-regional-btn">Adicionar</button>
+                      <label class="form-label">Encarregados</label>
+                      <div class="input-group mb-2">
+                        <input type="text" class="form-control" id="encarregado-input" placeholder="Nome do Encarregado">
+                        <div class="input-group-text">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="tipo-encarregado" id="enc-regional-radio" value="regional" checked>
+                            <label class="form-check-label" for="enc-regional-radio">Regional</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="tipo-encarregado" id="enc-local-radio" value="local">
+                            <label class="form-check-label" for="enc-local-radio">Local</label>
+                          </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="add-encarregado-btn">Adicionar</button>
                       </div>
-                      <ul class="list-group mt-2" id="enc-regionais-list"></ul>
+                      <ul class="list-group mt-2" id="encarregados-list"></ul>
                     </div>
 
                     <!-- Examinadoras -->

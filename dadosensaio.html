@@ -111,16 +111,40 @@
                                         <div class="mb-3">
                                             <label for="atendimento-ensaio" class="form-label">Atendimento Ensaio</label>
                                             <input type="text" class="form-control" id="atendimento-ensaio">
-          </div>
-          <div class="mb-3">
-                                            <label for="regencia-local1" class="form-label">Regência Regional/Local 1</label>
-                                            <input type="text" class="form-control" id="regencia-local1">
-          </div>
+                                        </div>
                                         <div class="mb-3">
-                                            <label for="regencia-local2" class="form-label">Regência Regional/Local 2</label>
-                                            <input type="text" class="form-control" id="regencia-local2">
-        </div>
-      </div>
+                                            <label for="regencia-local1" class="form-label">Regência 1</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="regencia-local1" placeholder="Nome do Regente">
+                                                <div class="input-group-text">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="tipo-regencia1" id="regencia1-regional" value="regional" checked>
+                                                        <label class="form-check-label" for="regencia1-regional">Regional</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="tipo-regencia1" id="regencia1-local" value="local">
+                                                        <label class="form-check-label" for="regencia1-local">Local</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="regencia-local2" class="form-label">Regência 2</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="regencia-local2" placeholder="Nome do Regente">
+                                                <div class="input-group-text">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="tipo-regencia2" id="regencia2-regional" value="regional" checked>
+                                                        <label class="form-check-label" for="regencia2-regional">Regional</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="tipo-regencia2" id="regencia2-local" value="local">
+                                                        <label class="form-check-label" for="regencia2-local">Local</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
 
@@ -439,17 +463,27 @@
                                     <div class="col-md-4">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="card-title mb-0">Encarregados Regionais</h5>
+                                                <h5 class="card-title mb-0">Encarregados</h5>
                                             </div>
                                             <div class="card-body">
-            <div class="input-group mb-3">
-                                                    <input type="text" id="enc-regional-input" class="form-control" placeholder="Nome do Encarregado">
-                                                    <button class="btn btn-primary" type="button" id="add-enc-regional-btn">Adicionar</button>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" id="encarregado-input" class="form-control" placeholder="Nome do Encarregado">
+                                                    <div class="input-group-text">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="tipo-encarregado" id="enc-regional-radio" value="regional" checked>
+                                                            <label class="form-check-label" for="enc-regional-radio">Regional</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="tipo-encarregado" id="enc-local-radio" value="local">
+                                                            <label class="form-check-label" for="enc-local-radio">Local</label>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-primary" type="button" id="add-encarregado-btn">Adicionar</button>
                                                 </div>
-                                                <ul class="list-group" id="enc-regionais-list"></ul>
-            </div>
-          </div>
-        </div>
+                                                <ul class="list-group" id="encarregados-list"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4">
                                         <div class="card">
                                             <div class="card-header">

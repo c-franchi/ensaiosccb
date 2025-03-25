@@ -100,14 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const addAnciaoBtn = document.getElementById('add-anciao-btn');
     const anciaoInput = document.getElementById('anciao-input');
     const ancioesList = document.getElementById('ancioes-list');
-
-    const addEncRegionalBtn = document.getElementById('add-enc-regional-btn');
-    const encRegionalInput = document.getElementById('enc-regional-input');
-    const encRegionaisList = document.getElementById('enc-regionais-list');
-
-    const addExaminadoraBtn = document.getElementById('add-examinadora-btn');
-    const examinadoraInput = document.getElementById('examinadora-input');
-    const examinadorasList = document.getElementById('examinadoras-list');
+    const addEncarregadoBtn = document.getElementById('add-encarregado-btn');
+    const encarregadoInput = document.getElementById('encarregado-input');
+    const encarregadosList = document.getElementById('encarregados-list');
 
     if (addAnciaoBtn && anciaoInput && ancioesList) {
         addAnciaoBtn.addEventListener('click', () => adicionarPresenca(anciaoInput, ancioesList, 'anciao'));
@@ -119,25 +114,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (addEncRegionalBtn && encRegionalInput && encRegionaisList) {
-        addEncRegionalBtn.addEventListener('click', () => adicionarPresenca(encRegionalInput, encRegionaisList, 'enc-regional'));
-        encRegionalInput.addEventListener('keypress', function(e) {
+    if (addEncarregadoBtn && encarregadoInput && encarregadosList) {
+        addEncarregadoBtn.addEventListener('click', () => adicionarEncarregado(encarregadoInput, encarregadosList));
+        encarregadoInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                adicionarPresenca(encRegionalInput, encRegionaisList, 'enc-regional');
+                adicionarEncarregado(encarregadoInput, encarregadosList);
             }
         });
     }
-
-    if (addExaminadoraBtn && examinadoraInput && examinadorasList) {
-        addExaminadoraBtn.addEventListener('click', () => adicionarPresenca(examinadoraInput, examinadorasList, 'examinadora'));
-        examinadoraInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                adicionarPresenca(examinadoraInput, examinadorasList, 'examinadora');
-      }
-    });
-  }
 
     // Configurar formulário
     const form = document.getElementById('novo-ensaio-form');
@@ -215,6 +200,28 @@ function removerPresenca(button) {
     button.closest('li').remove();
 }
 
+function adicionarEncarregado(input, lista) {
+    const nome = input.value.trim();
+    if (!nome) return;
+
+    const tipo = document.querySelector('input[name="tipo-encarregado"]:checked').value;
+    const li = document.createElement('li');
+    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+    
+    const span = document.createElement('span');
+    span.textContent = `${nome} (${tipo === 'regional' ? 'Regional' : 'Local'})`;
+    
+    const button = document.createElement('button');
+    button.className = 'btn btn-danger btn-sm';
+    button.textContent = 'Remover';
+    button.onclick = () => removerPresenca(button);
+    
+    li.appendChild(span);
+    li.appendChild(button);
+    lista.appendChild(li);
+    input.value = '';
+}
+
 function salvarEnsaio() {
     const ccbEnsaioType = localStorage.getItem('ccbEnsaioType');
     const ccbLocalidade = localStorage.getItem('ccbLocalidade');
@@ -245,8 +252,14 @@ function salvarEnsaio() {
     } else {
         dadosEspecificos = {
             atendimentoEnsaio: document.getElementById('atendimento-ensaio').value,
-            regenciaLocal1: document.getElementById('regencia-local1').value,
-            regenciaLocal2: document.getElementById('regencia-local2').value
+            regenciaLocal1: {
+                nome: document.getElementById('regencia-local1').value,
+                tipo: document.querySelector('input[name="tipo-regencia1"]:checked').value
+            },
+            regenciaLocal2: {
+                nome: document.getElementById('regencia-local2').value,
+                tipo: document.querySelector('input[name="tipo-regencia2"]:checked').value
+            }
         };
     }
 

@@ -96,13 +96,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const anciaoInput = document.getElementById('anciao-input');
     const ancioesList = document.getElementById('ancioes-list');
 
-    const addEncRegionalBtn = document.getElementById('add-enc-regional-btn');
-    const encRegionalInput = document.getElementById('enc-regional-input');
-    const encRegionaisList = document.getElementById('enc-regionais-list');
-
-    const addExaminadoraBtn = document.getElementById('add-examinadora-btn');
-    const examinadoraInput = document.getElementById('examinadora-input');
-    const examinadorasList = document.getElementById('examinadoras-list');
+    const addEncarregadoBtn = document.getElementById('add-encarregado-btn');
+    const encarregadoInput = document.getElementById('encarregado-input');
+    const encarregadosList = document.getElementById('encarregados-list');
 
     if (addAnciaoBtn && anciaoInput && ancioesList) {
         addAnciaoBtn.addEventListener('click', () => adicionarPresenca(anciaoInput, ancioesList, 'anciao'));
@@ -114,22 +110,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (addEncRegionalBtn && encRegionalInput && encRegionaisList) {
-        addEncRegionalBtn.addEventListener('click', () => adicionarPresenca(encRegionalInput, encRegionaisList, 'enc-regional'));
-        encRegionalInput.addEventListener('keypress', function(e) {
+    if (addEncarregadoBtn && encarregadoInput && encarregadosList) {
+        addEncarregadoBtn.addEventListener('click', () => adicionarEncarregado(encarregadoInput, encarregadosList));
+        encarregadoInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                adicionarPresenca(encRegionalInput, encRegionaisList, 'enc-regional');
-            }
-        });
-    }
-
-    if (addExaminadoraBtn && examinadoraInput && examinadorasList) {
-        addExaminadoraBtn.addEventListener('click', () => adicionarPresenca(examinadoraInput, examinadorasList, 'examinadora'));
-        examinadoraInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                adicionarPresenca(examinadoraInput, examinadorasList, 'examinadora');
+                adicionarEncarregado(encarregadoInput, encarregadosList);
             }
         });
     }
@@ -220,8 +206,20 @@ function carregarDadosEnsaio(ensaioId) {
             
             // Preencher campos específicos para ensaio local
             document.getElementById('atendimento-ensaio').value = ensaio.atendimentoEnsaio || '';
-            document.getElementById('regencia-local1').value = ensaio.regenciaLocal1 || '';
-            document.getElementById('regencia-local2').value = ensaio.regenciaLocal2 || '';
+            
+            // Preencher regência 1
+            if (ensaio.regenciaLocal1) {
+                document.getElementById('regencia-local1').value = ensaio.regenciaLocal1.nome || '';
+                const tipoRegencia1 = ensaio.regenciaLocal1.tipo || 'regional';
+                document.querySelector(`input[name="tipo-regencia1"][value="${tipoRegencia1}"]`).checked = true;
+            }
+            
+            // Preencher regência 2
+            if (ensaio.regenciaLocal2) {
+                document.getElementById('regencia-local2').value = ensaio.regenciaLocal2.nome || '';
+                const tipoRegencia2 = ensaio.regenciaLocal2.tipo || 'regional';
+                document.querySelector(`input[name="tipo-regencia2"][value="${tipoRegencia2}"]`).checked = true;
+            }
         }
         
         // Preencher dados da Palavra
@@ -329,6 +327,30 @@ function carregarDadosEnsaio(ensaioId) {
             }
         }
         
+        // Carregar encarregados
+        if (ensaio.encarregados) {
+            const encarregadosList = document.getElementById('encarregados-list');
+            if (encarregadosList) {
+                encarregadosList.innerHTML = '';
+                ensaio.encarregados.forEach(encarregado => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    
+                    const span = document.createElement('span');
+                    span.textContent = `${encarregado.nome} (${encarregado.tipo === 'regional' ? 'Regional' : 'Local'})`;
+                    
+                    const button = document.createElement('button');
+                    button.className = 'btn btn-danger btn-sm';
+                    button.textContent = 'Remover';
+                    button.onclick = () => removerPresenca(button);
+                    
+                    li.appendChild(span);
+                    li.appendChild(button);
+                    encarregadosList.appendChild(li);
+                });
+            }
+        }
+        
         document.getElementById('ensaio-id').value = ensaioId;
         ocultarStatus();
     } catch (error) {
@@ -432,6 +454,28 @@ function removerPresenca(button) {
     button.closest('li').remove();
 }
 
+function adicionarEncarregado(input, lista) {
+    const nome = input.value.trim();
+    if (!nome) return;
+
+    const tipo = document.querySelector('input[name="tipo-encarregado"]:checked').value;
+    const li = document.createElement('li');
+    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+    
+    const span = document.createElement('span');
+    span.textContent = `${nome} (${tipo === 'regional' ? 'Regional' : 'Local'})`;
+    
+    const button = document.createElement('button');
+    button.className = 'btn btn-danger btn-sm';
+    button.textContent = 'Remover';
+    button.onclick = () => removerPresenca(button);
+    
+    li.appendChild(span);
+    li.appendChild(button);
+    lista.appendChild(li);
+    input.value = '';
+}
+
 function salvarAlteracoes() {
     mostrarStatus('Preparando para salvar alterações...');
     
@@ -466,8 +510,14 @@ function salvarAlteracoes() {
     } else {
         dadosEspecificos = {
             atendimentoEnsaio: document.getElementById('atendimento-ensaio').value,
-            regenciaLocal1: document.getElementById('regencia-local1').value,
-            regenciaLocal2: document.getElementById('regencia-local2').value
+            regenciaLocal1: {
+                nome: document.getElementById('regencia-local1').value,
+                tipo: document.querySelector('input[name="tipo-regencia1"]:checked').value
+            },
+            regenciaLocal2: {
+                nome: document.getElementById('regencia-local2').value,
+                tipo: document.querySelector('input[name="tipo-regencia2"]:checked').value
+            }
         };
     }
 
@@ -541,6 +591,19 @@ function salvarAlteracoes() {
         versiculo: palavraVersiculo ? palavraVersiculo.value.trim() : ''
     };
 
+    // Coletar encarregados
+    const encarregadosList = document.getElementById('encarregados-list');
+    const encarregados = [];
+    if (encarregadosList) {
+        encarregadosList.querySelectorAll('li').forEach(li => {
+            const span = li.querySelector('span');
+            const texto = span.textContent;
+            const nome = texto.substring(0, texto.lastIndexOf('(')).trim();
+            const tipo = texto.includes('Regional') ? 'regional' : 'local';
+            encarregados.push({ nome, tipo });
+        });
+    }
+
     // Criar objeto do ensaio atualizado
     const ensaioAtualizado = {
         id: ensaioId,
@@ -555,6 +618,7 @@ function salvarAlteracoes() {
         demaisPresencas: demaisPresencas,
         observacoes: observacoes,
         palavra: palavra,
+        encarregados: encarregados,
         dataCriacao: new Date().toISOString()
     };
 
@@ -649,8 +713,14 @@ function salvarEnsaio() {
     } else {
         dadosEspecificos = {
             atendimentoEnsaio: document.getElementById('atendimento-ensaio').value,
-            regenciaLocal1: document.getElementById('regencia-local1').value,
-            regenciaLocal2: document.getElementById('regencia-local2').value
+            regenciaLocal1: {
+                nome: document.getElementById('regencia-local1').value,
+                tipo: document.querySelector('input[name="tipo-regencia1"]:checked').value
+            },
+            regenciaLocal2: {
+                nome: document.getElementById('regencia-local2').value,
+                tipo: document.querySelector('input[name="tipo-regencia2"]:checked').value
+            }
         };
     }
 
@@ -737,7 +807,7 @@ function salvarEnsaio() {
         hinos: hinos,
         demaisPresencas: demaisPresencas,
         observacoes: observacoes,
-       // palavra: palavra,
+        palavra: palavra,
         dataCriacao: new Date().toISOString()
     };
 
