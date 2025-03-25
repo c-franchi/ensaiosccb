@@ -26,25 +26,252 @@ function formatarData(data) {
     return `${dia}/${mes}/${ano}`;
 }
 
+function formatarTipoPresenca(tipo) {
+    const tipos = {
+        'anciao': 'Ancião',
+        'cooperador': 'Cooperador',
+        'cooperadorJovens': 'Cooperador de Jovens',
+        'encarregadoRegional': 'Encarregado Regional',
+        'encarregadoLocal': 'Encarregado Local',
+        'examinadora': 'Examinadora',
+        'irmaos': 'Irmãos',
+        'irmas': 'Irmãs'
+    };
+    return tipos[tipo] || tipo;
+}
+
+function exibirDetalhesEnsaio(ensaio) {
+    const detalhesContainer = document.getElementById('detalhes-ensaio');
+    const ccbEnsaioType = localStorage.getItem('ccbEnsaioType');
+    
+    let presencasHtml = '';
+    if (ccbEnsaioType === 'regional') {
+        presencasHtml = `
+            <div class="accordion" id="presencasAccordion">
+                <!-- Presenças de Serviço -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#presencasServico">
+                            Presenças de Serviço
+                        </button>
+                    </h2>
+                    <div id="presencasServico" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                ${Object.entries(ensaio.presencas).map(([tipo, dados]) => {
+                                    if (tipo === 'irmaos' || tipo === 'irmas') return '';
+                                    if (tipo === 'encarregadoRegional' || tipo === 'encarregadoLocal' || tipo === 'examinadora') return '';
+                                    return `
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            ${formatarTipoPresenca(tipo)}
+                                            <span class="badge bg-primary rounded-pill">${dados.quantidade}</span>
+                                        </li>
+                                        ${dados.nomes ? `
+                                            <li class="list-group-item">
+                                                <small class="text-muted">${dados.nomes}</small>
+                                            </li>
+                                        ` : ''}
+                                    `;
+                                }).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Encarregados e Examinadora -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#encarregadosExaminadora">
+                            Encarregados e Examinadora
+                        </button>
+                    </h2>
+                    <div id="encarregadosExaminadora" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                ${Object.entries(ensaio.presencas).map(([tipo, dados]) => {
+                                    if (tipo === 'irmaos' || tipo === 'irmas') return '';
+                                    if (tipo === 'encarregadoRegional' || tipo === 'encarregadoLocal' || tipo === 'examinadora') {
+                                        return `
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                ${formatarTipoPresenca(tipo)}
+                                                <span class="badge bg-primary rounded-pill">${dados.quantidade}</span>
+                                            </li>
+                                            ${dados.nomes ? `
+                                                <li class="list-group-item">
+                                                    <small class="text-muted">${dados.nomes}</small>
+                                                </li>
+                                            ` : ''}
+                                        `;
+                                    }
+                                    return '';
+                                }).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Irmãos e Irmãs -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#irmaosIrmas">
+                            Irmãos e Irmãs
+                        </button>
+                    </h2>
+                    <div id="irmaosIrmas" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Irmãos
+                                    <span class="badge bg-primary rounded-pill">${ensaio.presencas.irmaos}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Irmãs
+                                    <span class="badge bg-primary rounded-pill">${ensaio.presencas.irmas}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        presencasHtml = `
+            <div class="accordion" id="presencasAccordion">
+                <!-- Presenças de Serviço -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#presencasServico">
+                            Presenças de Serviço
+                        </button>
+                    </h2>
+                    <div id="presencasServico" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                ${Object.entries(ensaio.presencas).map(([tipo, quantidade]) => {
+                                    if (tipo === 'irmaos' || tipo === 'irmas') return '';
+                                    if (tipo === 'encarregadoRegional' || tipo === 'encarregadoLocal' || tipo === 'examinadora') return '';
+                                    return `
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            ${formatarTipoPresenca(tipo)}
+                                            <span class="badge bg-primary rounded-pill">${quantidade}</span>
+                                        </li>
+                                    `;
+                                }).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Encarregados e Examinadora -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#encarregadosExaminadora">
+                            Encarregados e Examinadora
+                        </button>
+                    </h2>
+                    <div id="encarregadosExaminadora" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                ${Object.entries(ensaio.presencas).map(([tipo, quantidade]) => {
+                                    if (tipo === 'irmaos' || tipo === 'irmas') return '';
+                                    if (tipo === 'encarregadoRegional' || tipo === 'encarregadoLocal' || tipo === 'examinadora') {
+                                        return `
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                ${formatarTipoPresenca(tipo)}
+                                                <span class="badge bg-primary rounded-pill">${quantidade}</span>
+                                            </li>
+                                        `;
+                                    }
+                                    return '';
+                                }).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Irmãos e Irmãs -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#irmaosIrmas">
+                            Irmãos e Irmãs
+                        </button>
+                    </h2>
+                    <div id="irmaosIrmas" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Irmãos
+                                    <span class="badge bg-primary rounded-pill">${ensaio.presencas.irmaos}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Irmãs
+                                    <span class="badge bg-primary rounded-pill">${ensaio.presencas.irmas}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    detalhesContainer.innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Detalhes do Ensaio</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Data:</strong> ${formatarData(ensaio.data)}</p>
+                        <p><strong>Igreja:</strong> ${ensaio.igreja}</p>
+                        <p><strong>Tipo:</strong> ${formatarTipoEnsaio(ensaio.tipo)}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Palavra:</strong> ${ensaio.palavra.livro} ${ensaio.palavra.capitulo}:${ensaio.palavra.versiculo}</p>
+                        <p><strong>Observações:</strong> ${ensaio.observacoes || 'Nenhuma'}</p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        ${presencasHtml}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6>Hinos</h6>
+                        <ul class="list-group">
+                            ${ensaio.hinos.map(hino => `
+                                <li class="list-group-item">${hino}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6>Instrumentos</h6>
+                        <ul class="list-group">
+                            ${Object.entries(ensaio.instrumentos).map(([instrumento, quantidade]) => `
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    ${formatarNomeInstrumento(instrumento)}
+                                    <span class="badge bg-primary rounded-pill">${quantidade}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function carregarEventos() {
     console.log("Iniciando carregamento de eventos");
     const ccbLocalidade = localStorage.getItem('ccbLocalidade');
     const chaveLocalidade = `ensaios_${ccbLocalidade.toLowerCase().replace(/\s+/g, '_')}`;
     
     try {
-        // Carregar eventos do localStorage
+        // Carregar eventos apenas do localStorage
         let eventos = JSON.parse(localStorage.getItem(chaveLocalidade) || '[]');
         console.log("Eventos do localStorage:", eventos);
-        
-        // Carregar eventos do sessionStorage
-        const eventosSession = JSON.parse(sessionStorage.getItem(chaveLocalidade) || '[]');
-        console.log("Eventos do sessionStorage:", eventosSession);
-        
-        // Combinar eventos, removendo duplicatas baseado no ID
-        eventos = [...eventos, ...eventosSession];
-        eventos = eventos.filter((evento, index, self) => 
-            index === self.findIndex((e) => e.id === evento.id)
-        );
         
         // Filtrar apenas eventos ativos ou sem status definido (para compatibilidade)
         eventos = eventos.filter(evento => !evento.status || evento.status === 'ativo');
@@ -66,7 +293,7 @@ function carregarEventos() {
             return;
         }
         
-        eventosContainer.innerHTML = eventos.map(evento => {
+        eventosContainer.innerHTML = eventos.map((evento, index) => {
             // Calcular totais e porcentagens
             const instrumentos = evento.instrumentos || {};
             const totalInstrumentos = Object.values(instrumentos).reduce((a, b) => a + b, 0);
@@ -108,8 +335,8 @@ function carregarEventos() {
             } else {
                 dadosEspecificos = `
                     <p><strong>Atendimento Ensaio:</strong> ${evento.atendimentoEnsaio || 'Não informado'}</p>
-                    <p><strong>Regência Local 1:</strong> ${evento.regenciaLocal1 || 'Não informado'}</p>
-                    <p><strong>Regência Local 2:</strong> ${evento.regenciaLocal2 || 'Não informado'}</p>
+                    <p><strong>Regência Local 1:</strong> ${evento.regenciaLocal1?.nome || 'Não informado'} (${evento.regenciaLocal1?.tipo === 'regional' ? 'Regional' : 'Local'})</p>
+                    <p><strong>Regência Local 2:</strong> ${evento.regenciaLocal2?.nome || 'Não informado'} (${evento.regenciaLocal2?.tipo === 'regional' ? 'Regional' : 'Local'})</p>
                 `;
             }
             
@@ -121,6 +348,184 @@ function carregarEventos() {
                 }
                 return `<li class="list-group-item">Hino ${hino}</li>`;
             }).join('');
+            
+            // Preparar presenças
+            let presencasHtml = '';
+            if (evento.presencas) {
+                // Calcular total de presenças
+                let totalPresencas = 0;
+                Object.entries(evento.presencas).forEach(([tipo, dados]) => {
+                    if (typeof dados === 'object') {
+                        totalPresencas += dados.quantidade || 0;
+                    } else {
+                        totalPresencas += dados || 0;
+                    }
+                });
+                
+                // Identificadores únicos para este evento
+                const presencasId = `presencas-${index}`;
+                const presencasServicoId = `presencasServico-${index}`;
+                const encarregadosExaminadoraId = `encarregadosExaminadora-${index}`;
+                const irmaosIrmasId = `irmaosIrmas-${index}`;
+                
+                if (evento.tipo === 'regional') {
+                    presencasHtml = `
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <h6>Presenças <span class="badge bg-primary">${totalPresencas} total</span></h6>
+                                <div class="accordion" id="${presencasId}">
+                                    <!-- Presenças de Serviço -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${presencasServicoId}">
+                                                Presenças de Serviço
+                                            </button>
+                                        </h2>
+                                        <div id="${presencasServicoId}" class="accordion-collapse collapse" data-bs-parent="#${presencasId}">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    ${Object.entries(evento.presencas).filter(([tipo]) => 
+                                                        !['irmaos', 'irmas', 'encarregadoRegional', 'encarregadoLocal', 'examinadora'].includes(tipo)
+                                                    ).map(([tipo, valor]) => `
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            ${formatarTipoPresenca(tipo)}
+                                                            <span class="badge bg-primary rounded-pill">${valor || 0}</span>
+                                                        </li>
+                                                    `).join('')}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Encarregados e Examinadora -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${encarregadosExaminadoraId}">
+                                                Encarregados e Examinadora
+                                            </button>
+                                        </h2>
+                                        <div id="${encarregadosExaminadoraId}" class="accordion-collapse collapse" data-bs-parent="#${presencasId}">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    ${Object.entries(evento.presencas).filter(([tipo]) => 
+                                                        ['encarregadoRegional', 'encarregadoLocal', 'examinadora'].includes(tipo)
+                                                    ).map(([tipo, valor]) => `
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            ${formatarTipoPresenca(tipo)}
+                                                            <span class="badge bg-primary rounded-pill">${valor || 0}</span>
+                                                        </li>
+                                                    `).join('')}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Irmãos e Irmãs -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${irmaosIrmasId}">
+                                                Irmãos e Irmãs
+                                            </button>
+                                        </h2>
+                                        <div id="${irmaosIrmasId}" class="accordion-collapse collapse" data-bs-parent="#${presencasId}">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        Irmãos
+                                                        <span class="badge bg-primary rounded-pill">${evento.presencas.irmaos || 0}</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        Irmãs
+                                                        <span class="badge bg-primary rounded-pill">${evento.presencas.irmas || 0}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    presencasHtml = `
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <h6>Presenças <span class="badge bg-primary">${totalPresencas} total</span></h6>
+                                <div class="accordion" id="${presencasId}">
+                                    <!-- Presenças de Serviço -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${presencasServicoId}">
+                                                Presenças de Serviço
+                                            </button>
+                                        </h2>
+                                        <div id="${presencasServicoId}" class="accordion-collapse collapse" data-bs-parent="#${presencasId}">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    ${Object.entries(evento.presencas).filter(([tipo]) => 
+                                                        !['irmaos', 'irmas', 'encarregadoRegional', 'encarregadoLocal', 'examinadora'].includes(tipo)
+                                                    ).map(([tipo, valor]) => `
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            ${formatarTipoPresenca(tipo)}
+                                                            <span class="badge bg-primary rounded-pill">${valor || 0}</span>
+                                                        </li>
+                                                    `).join('')}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Encarregados e Examinadora -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${encarregadosExaminadoraId}">
+                                                Encarregados e Examinadora
+                                            </button>
+                                        </h2>
+                                        <div id="${encarregadosExaminadoraId}" class="accordion-collapse collapse" data-bs-parent="#${presencasId}">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    ${Object.entries(evento.presencas).filter(([tipo]) => 
+                                                        ['encarregadoRegional', 'encarregadoLocal', 'examinadora'].includes(tipo)
+                                                    ).map(([tipo, valor]) => `
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            ${formatarTipoPresenca(tipo)}
+                                                            <span class="badge bg-primary rounded-pill">${valor || 0}</span>
+                                                        </li>
+                                                    `).join('')}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Irmãos e Irmãs -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${irmaosIrmasId}">
+                                                Irmãos e Irmãs
+                                            </button>
+                                        </h2>
+                                        <div id="${irmaosIrmasId}" class="accordion-collapse collapse" data-bs-parent="#${presencasId}">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        Irmãos
+                                                        <span class="badge bg-primary rounded-pill">${evento.presencas.irmaos || 0}</span>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        Irmãs
+                                                        <span class="badge bg-primary rounded-pill">${evento.presencas.irmas || 0}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
             
             return `
                 <div class="card mb-3">
@@ -160,12 +565,6 @@ function carregarEventos() {
                                         </h2>
                                         <div id="collapse-${evento.id}" class="accordion-collapse collapse" data-bs-parent="#accordion-${evento.id}">
                                             <div class="accordion-body p-2">
-                                                <div class="row mb-2">
-                                                    <div class="col-12">
-                                                        <p class="mb-1"><strong>Cordas:</strong> ${porcentagens.cordas} (${porcentagens.cordasPct}%)</p>
-                                                    </div>
-                                                </div>
-                                                
                                                 <div class="row g-2">
                                                     <div class="col-12 col-sm-6">
                                                         <p class="mb-1"><strong>Cordas:</strong> ${porcentagens.cordas} (${porcentagens.cordasPct}%)</p>
@@ -225,6 +624,7 @@ function carregarEventos() {
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="row g-3 mt-2">
                             <div class="col-12">
                                 <h6>Hinos</h6>
@@ -246,6 +646,9 @@ function carregarEventos() {
                                 </div>
                             </div>
                         </div>
+                        
+                        ${presencasHtml}
+                        
                         <div class="row mt-3">
                             <div class="col-12">
                                 <div class="d-flex flex-wrap gap-2">

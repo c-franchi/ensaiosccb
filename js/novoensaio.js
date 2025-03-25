@@ -5,17 +5,21 @@
  */
 function increment(id) {
   const input = document.getElementById(id);
-  let val = parseInt(input.value, 10) || 0;
-  val++;
-  input.value = val;
+  if (input) {
+    const currentValue = parseInt(input.value) || 0;
+    input.value = currentValue + 1;
+    atualizarTotalPresencas();
+  }
 }
 
 function decrement(id) {
   const input = document.getElementById(id);
-  let val = parseInt(input.value, 10) || 0;
-  if (val > 0) {
-    val--;
-    input.value = val;
+  if (input) {
+    const currentValue = parseInt(input.value) || 0;
+    if (currentValue > 0) {
+      input.value = currentValue - 1;
+      atualizarTotalPresencas();
+    }
   }
 }
 
@@ -31,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'login.html';
         return;
     }
+    
+    console.log('Tipo de ensaio:', ccbEnsaioType);
 
     // Atualizar informações da localidade
     const localidadeInfo = document.getElementById('localidade-info');
@@ -53,14 +59,31 @@ document.addEventListener('DOMContentLoaded', function() {
         camposRegional.classList.remove('d-none');
         camposLocal.classList.add('d-none');
         if (hinoAberturaContainer) hinoAberturaContainer.classList.remove('d-none');
+        
+        // Mostrar campos de nomes para todos exceto irmãos e irmãs
+        const camposNomes = document.querySelectorAll('.campo-nome');
+        camposNomes.forEach(campo => {
+            const id = campo.id;
+            if (id !== 'irmaos-nomes' && id !== 'irmas-nomes') {
+                campo.style.display = 'block';
+            } else {
+                campo.style.display = 'none';
+            }
+        });
     } else {
         camposRegional.classList.add('d-none');
         camposLocal.classList.remove('d-none');
         if (hinoAberturaContainer) hinoAberturaContainer.classList.add('d-none');
+        
+        // Esconder todos os campos de nomes
+        const camposNomes = document.querySelectorAll('.campo-nome');
+        camposNomes.forEach(campo => {
+            campo.style.display = 'none';
+        });
     }
 
-    // adicionado para esconder palavra em ensaio local
-      const palavraContainer = document.getElementById('palavra-container');
+    // Adicionado para esconder palavra em ensaio local
+    const palavraContainer = document.getElementById('palavra-container');
     if (palavraContainer) {
         if (ccbEnsaioType === 'local') {
             palavraContainer.classList.add('d-none');
@@ -95,47 +118,54 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Configurar eventos para demais presenças
-    const addAnciaoBtn = document.getElementById('add-anciao-btn');
-    const anciaoInput = document.getElementById('anciao-input');
-    const ancioesList = document.getElementById('ancioes-list');
-    const addEncarregadoBtn = document.getElementById('add-encarregado-btn');
-    const encarregadoInput = document.getElementById('encarregado-input');
-    const encarregadosList = document.getElementById('encarregados-list');
-
-    if (addAnciaoBtn && anciaoInput && ancioesList) {
-        addAnciaoBtn.addEventListener('click', () => adicionarPresenca(anciaoInput, ancioesList, 'anciao'));
-        anciaoInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                adicionarPresenca(anciaoInput, ancioesList, 'anciao');
-            }
-        });
-    }
-
-    if (addEncarregadoBtn && encarregadoInput && encarregadosList) {
-        addEncarregadoBtn.addEventListener('click', () => adicionarEncarregado(encarregadoInput, encarregadosList));
-        encarregadoInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                adicionarEncarregado(encarregadoInput, encarregadosList);
-            }
-        });
-    }
-
-    // Configurar formulário
-    const form = document.getElementById('novo-ensaio-form');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-    e.preventDefault();
-            console.log('Formulário submetido');
-            
+    
+    // Configurar event listener para o botão salvar
+    const botaoSalvar = document.getElementById('salvar-ensaio');
+    if (botaoSalvar) {
+        console.log('Configurando event listener para o botão salvar');
+        botaoSalvar.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Botão salvar clicado');
             salvarEnsaio();
         });
     } else {
-        console.error('Formulário não encontrado');
+        console.error('Botão salvar não encontrado');
     }
+    
+    // Configurar a data atual como default
+    const dataInput = document.getElementById('data');
+    if (dataInput) {
+        const dataAtual = new Date().toISOString().split('T')[0];
+        dataInput.value = dataAtual;
+    }
+    
+    // Configurar increment/decrement e cálculos de total
+    document.querySelectorAll('.btn-increment, .btn-decrement').forEach(botao => {
+        botao.addEventListener('click', function() {
+            const acao = this.classList.contains('btn-increment') ? 'increment' : 'decrement';
+            const alvo = this.getAttribute('data-target');
+            
+            if (acao === 'increment') {
+                increment(alvo);
+            } else {
+                decrement(alvo);
+            }
+        });
+    });
+    
+    // Adicionar listeners para os contadores
+    const contadores = ['anciao', 'cooperador', 'cooperadorJovens', 'encarregadoRegional', 
+                        'encarregadoLocal', 'examinadora', 'irmaos', 'irmas'];
+    
+    contadores.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('change', atualizarTotalPresencas);
+        }
+    });
+    
+    // Calcular total inicial
+    atualizarTotalPresencas();
 });
 
 // Função para adicionar hino de abertura
@@ -222,34 +252,100 @@ function adicionarEncarregado(input, lista) {
     input.value = '';
 }
 
+// Função para mostrar/esconder campos de nomes baseado no tipo de ensaio
+function atualizarCamposNomes() {
+    const ccbEnsaioType = localStorage.getItem('ccbEnsaioType');
+    const camposNomes = document.querySelectorAll('[id$="-nomes"]');
+    
+    camposNomes.forEach(campo => {
+        if (campo.id === 'irmaos-nomes' || campo.id === 'irmas-nomes') {
+            // Sempre esconder campos de nomes para irmãos e irmãs
+            campo.style.display = 'none';
+        } else {
+            // Mostrar campos de nomes apenas para ensaio regional
+            campo.style.display = ccbEnsaioType === 'regional' ? 'block' : 'none';
+        }
+    });
+    
+    // Garantir que todos os acordeões estejam visíveis
+    document.querySelectorAll('.accordion-item').forEach(item => {
+        item.style.display = 'block';
+    });
+    
+    console.log(`Campos de nomes atualizados para ensaio ${ccbEnsaioType}`);
+}
+
 function salvarEnsaio() {
+    console.log('Iniciando salvamento do ensaio...');
+    mostrarStatus('Salvando ensaio...');
+    
     const ccbEnsaioType = localStorage.getItem('ccbEnsaioType');
     const ccbLocalidade = localStorage.getItem('ccbLocalidade');
     
+    console.log('Tipo de ensaio:', ccbEnsaioType);
+    console.log('Localidade:', ccbLocalidade);
+    
+    if (!ccbEnsaioType || !ccbLocalidade) {
+        console.error('Dados necessários não encontrados!');
+        mostrarErro('Dados necessários não encontrados!');
+        return;
+    }
+
     // Coletar dados básicos
     const data = document.getElementById('data').value;
     const igreja = document.getElementById('igreja').value;
     
+    console.log('Data:', data);
+    console.log('Igreja:', igreja);
+    
     if (!data || !igreja) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Campos obrigatórios',
-            text: 'Por favor, preencha todos os campos obrigatórios.',
-            confirmButtonText: 'OK'
-        });
+        console.error('Campos obrigatórios não preenchidos!');
+        mostrarErro('Por favor, preencha todos os campos obrigatórios.');
         return;
     }
 
     // Coletar dados específicos baseado no tipo de ensaio
     let dadosEspecificos = {};
     if (ccbEnsaioType === 'regional') {
+        // Lógica para ensaio regional
+        console.log('Coletando dados para ensaio regional...');
         dadosEspecificos = {
             atendimentoAnciao: document.getElementById('atendimento-anciao').value,
             regencia1: document.getElementById('regencia1').value,
             regencia2: document.getElementById('regencia2').value,
-            examinadora: document.getElementById('examinadora').value
+            examinadora: document.getElementById('examinadora-nome').value,
+            presencas: {
+                anciao: {
+                    quantidade: parseInt(document.getElementById('anciao').value) || 0,
+                    nomes: document.getElementById('anciao-nomes').value
+                },
+                cooperador: {
+                    quantidade: parseInt(document.getElementById('cooperador').value) || 0,
+                    nomes: document.getElementById('cooperador-nomes').value
+                },
+                cooperadorJovens: {
+                    quantidade: parseInt(document.getElementById('cooperadorJovens').value) || 0,
+                    nomes: document.getElementById('cooperadorJovens-nomes').value
+                },
+                encarregadoRegional: {
+                    quantidade: parseInt(document.getElementById('encarregadoRegional').value) || 0,
+                    nomes: document.getElementById('encarregadoRegional-nomes').value
+                },
+                encarregadoLocal: {
+                    quantidade: parseInt(document.getElementById('encarregadoLocal').value) || 0,
+                    nomes: document.getElementById('encarregadoLocal-nomes').value
+                },
+                examinadora: {
+                    quantidade: parseInt(document.getElementById('examinadora').value) || 0,
+                    nomes: document.getElementById('examinadora-nomes').value
+                },
+                irmaos: parseInt(document.getElementById('irmaos').value) || 0,
+                irmas: parseInt(document.getElementById('irmas').value) || 0
+            }
         };
     } else {
+        // Lógica para ensaio local
+        console.log('Coletando dados para ensaio local...');
         dadosEspecificos = {
             atendimentoEnsaio: document.getElementById('atendimento-ensaio').value,
             regenciaLocal1: {
@@ -259,6 +355,16 @@ function salvarEnsaio() {
             regenciaLocal2: {
                 nome: document.getElementById('regencia-local2').value,
                 tipo: document.querySelector('input[name="tipo-regencia2"]:checked').value
+            },
+            presencas: {
+                anciao: parseInt(document.getElementById('anciao').value) || 0,
+                cooperador: parseInt(document.getElementById('cooperador').value) || 0,
+                cooperadorJovens: parseInt(document.getElementById('cooperadorJovens').value) || 0,
+                encarregadoRegional: parseInt(document.getElementById('encarregadoRegional').value) || 0,
+                encarregadoLocal: parseInt(document.getElementById('encarregadoLocal').value) || 0,
+                examinadora: parseInt(document.getElementById('examinadora').value) || 0,
+                irmaos: parseInt(document.getElementById('irmaos').value) || 0,
+                irmas: parseInt(document.getElementById('irmas').value) || 0
             }
         };
     }
@@ -266,15 +372,10 @@ function salvarEnsaio() {
     // Coletar instrumentos
     const instrumentos = {};
     const instrumentosIds = [
-        // Cordas
-        'violino', 'viola', 'violoncelo',
-        // Madeiras (incluindo saxofones)
-        'flauta', 'oboe', 'oboeAmore', 'corneIngles', 'clarinete', 'clarineteAlto', 
-        'clarineteBaixo', 'fagote', 'saxSoprano', 'saxAlto', 'saxTenor', 'saxBaritono',
-        // Metais
-        'trompete', 'flugelhorn', 'trompa', 'trombone', 'baritono', 'eufonio', 'tuba',
-        // Outros
-        'organistas', 'acordeon', 'nao-inclusos'
+        'violino', 'viola', 'violoncelo', 'flauta', 'oboe', 'oboeAmore', 'corneIngles',
+        'clarinete', 'clarineteAlto', 'clarineteBaixo', 'fagote', 'saxSoprano', 'saxAlto',
+        'saxTenor', 'saxBaritono', 'trompete', 'flugelhorn', 'trompa', 'trombone',
+        'baritono', 'eufonio', 'tuba', 'organistas', 'acordeon', 'nao-inclusos'
     ];
 
     instrumentosIds.forEach(id => {
@@ -299,90 +400,126 @@ function salvarEnsaio() {
         hinos.push(hinoNum);
     });
 
-    // Coletar demais presenças
-    const demaisPresencas = {
-        ancioes: [],
-        encRegionais: [],
-        examinadoras: []
-    };
-
-    document.querySelectorAll('#ancioes-list li').forEach(li => {
-        demaisPresencas.ancioes.push(li.textContent.trim().replace('Remover', '').trim());
-    });
-
-    document.querySelectorAll('#enc-regionais-list li').forEach(li => {
-        demaisPresencas.encRegionais.push(li.textContent.trim().replace('Remover', '').trim());
-    });
-
-    document.querySelectorAll('#examinadoras-list li').forEach(li => {
-        demaisPresencas.examinadoras.push(li.textContent.trim().replace('Remover', '').trim());
-    });
-
     // Coletar observações
-    const observacoes = document.getElementById('observacoes').value.trim();
+    const observacoesInput = document.getElementById('observacoes');
+    const observacoes = observacoesInput ? observacoesInput.value.trim() : '';
 
     // Coletar dados da Palavra
+    const palavraLivro = document.getElementById('palavra-livro');
+    const palavraCapitulo = document.getElementById('palavra-capitulo');
+    const palavraVersiculo = document.getElementById('palavra-versiculo');
+    
     const palavra = {
-        livro: document.getElementById('palavra-livro').value.trim(),
-        capitulo: document.getElementById('palavra-capitulo').value.trim(),
-        versiculo: document.getElementById('palavra-versiculo').value.trim()
+        livro: palavraLivro ? palavraLivro.value.trim() : '',
+        capitulo: palavraCapitulo ? palavraCapitulo.value.trim() : '',
+        versiculo: palavraVersiculo ? palavraVersiculo.value.trim() : ''
     };
 
+    // Criar objeto do ensaio
+    const ensaio = {
+        id: Date.now().toString(),
+        data: data,
+        igreja: igreja,
+        tipo: ccbEnsaioType,
+        localidade: ccbLocalidade,
+        status: 'ativo',
+        ...dadosEspecificos,
+        instrumentos: instrumentos,
+        hinos: hinos,
+        observacoes: observacoes,
+        palavra: palavra,
+        dataCriacao: new Date().toISOString()
+    };
+
+    console.log('Objeto do ensaio completo:', ensaio);
+
     try {
-        // Gerar ID único para o ensaio
-        const ensaioId = Date.now().toString();
-        
-        // Criar objeto do ensaio
-        const ensaio = {
-            id: ensaioId,
-            data: data,
-            igreja: igreja,
-            localidade: igreja,
-            tipo: ccbEnsaioType,
-            status: 'ativo',
-            ...dadosEspecificos,
-            instrumentos: instrumentos,
-            hinos: hinos,
-            palavra: palavra,
-            demaisPresencas: demaisPresencas,
-            observacoes: observacoes,
-            dataCriacao: new Date().toISOString()
-        };
+        // Criar chave única para a localidade
+        const chaveLocalidade = `ensaios_${ccbLocalidade.toLowerCase().replace(/\s+/g, '_')}`;
+        console.log('Chave de localidade:', chaveLocalidade);
         
         // Salvar no localStorage
-        const chaveLocalidade = `ensaios_${ccbLocalidade.toLowerCase().replace(/\s+/g, '_')}`;
-        let eventos = JSON.parse(localStorage.getItem(chaveLocalidade) || '[]');
-        eventos.push(ensaio);
-        localStorage.setItem(chaveLocalidade, JSON.stringify(eventos));
+        let ensaios = JSON.parse(localStorage.getItem(chaveLocalidade) || '[]');
+        ensaios.push(ensaio);
+        localStorage.setItem(chaveLocalidade, JSON.stringify(ensaios));
+        console.log('Ensaio salvo no localStorage. Total de ensaios:', ensaios.length);
         
-        // Salvar no sessionStorage para acesso rápido
-        eventos = JSON.parse(sessionStorage.getItem(chaveLocalidade) || '[]');
-        eventos.push(ensaio);
-        sessionStorage.setItem(chaveLocalidade, JSON.stringify(eventos));
-        
-        console.log('Ensaio salvo com sucesso:', ensaio);
+        mostrarStatus('Ensaio salvo com sucesso!', 'success');
         
         // Mostrar mensagem de sucesso
         Swal.fire({
+            title: 'Sucesso!',
+            text: 'Ensaio salvo com sucesso!',
             icon: 'success',
-            title: 'Ensaio salvo!',
-            text: 'O ensaio foi registrado com sucesso.',
             confirmButtonText: 'OK'
-        }).then(() => {
-            // Redirecionar para a página de eventos
-            window.location.href = 'eventos.html';
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'eventos.html';
+            }
         });
     } catch (error) {
         console.error('Erro ao salvar ensaio:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Erro',
-            text: 'Ocorreu um erro ao salvar o ensaio. Por favor, tente novamente.',
-            confirmButtonText: 'OK'
-        });
+        mostrarErro('Erro ao salvar o ensaio: ' + error.message);
+    }
+}
+
+function atualizarTotalPresencas() {
+    const ccbEnsaioType = localStorage.getItem('ccbEnsaioType');
+    let total = 0;
+    
+    const campos = [
+        'anciao', 'cooperador', 'cooperadorJovens',
+        'encarregadoRegional', 'encarregadoLocal', 'examinadora',
+        'irmaos', 'irmas'
+    ];
+    
+    campos.forEach(campo => {
+        const input = document.getElementById(campo);
+        if (input) {
+            total += parseInt(input.value) || 0;
+        }
+    });
+    
+    // Atualizar o campo de total
+    const totalInput = document.getElementById('total-presencas');
+    if (totalInput) {
+        totalInput.value = total;
     }
 }
 
 function cancelar() {
     window.location.href = 'eventos.html';
+}
+
+// Função para mostrar status na página
+function mostrarStatus(mensagem, tipo = 'info') {
+    const statusEl = document.getElementById('status-message');
+    if (statusEl) {
+        statusEl.textContent = mensagem;
+        statusEl.className = `alert alert-${tipo}`;
+        statusEl.classList.remove('d-none');
+        
+        // Esconder a mensagem após 5 segundos se for uma mensagem de sucesso
+        if (tipo === 'success') {
+            setTimeout(() => {
+                statusEl.classList.add('d-none');
+            }, 5000);
+        }
+    } else {
+        console.warn('Elemento de status não encontrado');
+    }
+}
+
+// Função para mostrar erro na página
+function mostrarErro(mensagem) {
+    console.error(mensagem);
+    mostrarStatus(mensagem, 'danger');
+}
+
+// Função para ocultar status
+function ocultarStatus() {
+    const statusElement = document.getElementById('status-message');
+    if (statusElement) {
+        statusElement.classList.add('d-none');
+    }
 }

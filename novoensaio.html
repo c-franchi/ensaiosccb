@@ -105,8 +105,8 @@
           <input type="text" class="form-control" id="regencia2" />
         </div>
         <div class="mb-3">
-          <label for="examinadora" class="form-label">Examinadora</label>
-                      <input type="text" class="form-control" id="examinadora" />
+          <label for="examinadora-nome" class="form-label">Examinadora</label>
+                      <input type="text" class="form-control" id="examinadora-nome" />
                     </div>
                   </div>
 
@@ -447,63 +447,137 @@
                 </ul>
               </div>
 
-              <!-- Demais Presenças -->
+              <!-- Aba Demais Presenças -->
               <div class="tab-pane fade" id="demais-presencas" role="tabpanel">
-                <div class="row">
-                  <div class="col-md-6">
-                    <!-- Anciãos -->
-                    <div class="mb-3">
-                      <label class="form-label">Anciãos</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control" id="anciao-input">
-                        <button type="button" class="btn btn-primary" id="add-anciao-btn">Adicionar</button>
-                      </div>
-                      <ul class="list-group mt-2" id="ancioes-list"></ul>
-                    </div>
-
-                    <!-- Encarregados -->
-                    <div class="mb-3">
-                      <label class="form-label">Encarregados</label>
-                      <div class="input-group mb-2">
-                        <input type="text" class="form-control" id="encarregado-input" placeholder="Nome do Encarregado">
-                        <div class="input-group-text">
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="tipo-encarregado" id="enc-regional-radio" value="regional" checked>
-                            <label class="form-check-label" for="enc-regional-radio">Regional</label>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <!-- Presenças de Serviço -->
+                          <div class="row mt-3">
+                              <div class="col-12">
+                                  <h5>Presenças</h5>
+                                  <div class="accordion" id="presencasAccordion">
+                                      <div class="accordion-item">
+                                          <h2 class="accordion-header">
+                                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#presencasServico">
+                                                  Presenças de Serviço
+                                              </button>
+                                          </h2>
+                                          <div id="presencasServico" class="accordion-collapse collapse">
+                                              <div class="accordion-body">
+                                                  <div class="mb-3">
+                                                      <label for="anciao" class="form-label">Ancião</label>
+                                                      <div class="input-group">
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="decrement('anciao')">-</button>
+                                                          <input type="number" class="form-control text-center" id="anciao" value="0" readonly>
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="increment('anciao')">+</button>
+                                                      </div>
+                                                      <input type="text" class="form-control mt-2" id="anciao-nomes" placeholder="Nomes dos Anciãos">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="cooperador" class="form-label">Cooperador</label>
+                                                      <div class="input-group">
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="decrement('cooperador')">-</button>
+                                                          <input type="number" class="form-control text-center" id="cooperador" value="0" readonly>
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="increment('cooperador')">+</button>
+                                                      </div>
+                                                      <input type="text" class="form-control mt-2" id="cooperador-nomes" placeholder="Nomes dos Cooperadores">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="cooperadorJovens" class="form-label">Cooperador de Jovens</label>
+                                                      <div class="input-group">
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="decrement('cooperadorJovens')">-</button>
+                                                          <input type="number" class="form-control text-center" id="cooperadorJovens" value="0" readonly>
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="increment('cooperadorJovens')">+</button>
+                                                      </div>
+                                                      <input type="text" class="form-control mt-2" id="cooperadorJovens-nomes" placeholder="Nomes dos Cooperadores de Jovens">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="accordion-item">
+                                          <h2 class="accordion-header">
+                                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#encarregadosExaminadora">
+                                                  Encarregados e Examinadora
+                                              </button>
+                                          </h2>
+                                          <div id="encarregadosExaminadora" class="accordion-collapse collapse">
+                                              <div class="accordion-body">
+                                                  <div class="mb-3">
+                                                      <label for="encarregadoRegional" class="form-label">Encarregado Regional</label>
+                                                      <div class="input-group">
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="decrement('encarregadoRegional')">-</button>
+                                                          <input type="number" class="form-control text-center" id="encarregadoRegional" value="0" readonly>
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="increment('encarregadoRegional')">+</button>
+                                                      </div>
+                                                      <input type="text" class="form-control mt-2" id="encarregadoRegional-nomes" placeholder="Nomes dos Encarregados Regionais">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="encarregadoLocal" class="form-label">Encarregado Local</label>
+                                                      <div class="input-group">
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="decrement('encarregadoLocal')">-</button>
+                                                          <input type="number" class="form-control text-center" id="encarregadoLocal" value="0" readonly>
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="increment('encarregadoLocal')">+</button>
+                                                      </div>
+                                                      <input type="text" class="form-control mt-2" id="encarregadoLocal-nomes" placeholder="Nomes dos Encarregados Locais">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="examinadora" class="form-label">Examinadora</label>
+                                                      <div class="input-group">
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="decrement('examinadora')">-</button>
+                                                          <input type="number" class="form-control text-center" id="examinadora" value="0" readonly>
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="increment('examinadora')">+</button>
+                                                      </div>
+                                                      <input type="text" class="form-control mt-2" id="examinadora-nomes" placeholder="Nomes das Examinadoras">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- Irmãos e Irmãs -->
+                                      <div class="accordion-item">
+                                          <h2 class="accordion-header">
+                                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#irmaosIrmas">
+                                                  Irmãos e Irmãs
+                                              </button>
+                                          </h2>
+                                          <div id="irmaosIrmas" class="accordion-collapse collapse">
+                                              <div class="accordion-body">
+                                                  <div class="mb-3">
+                                                      <label for="irmaos" class="form-label">Irmãos</label>
+                                                      <div class="input-group">
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="decrement('irmaos')">-</button>
+                                                          <input type="number" class="form-control text-center" id="irmaos" value="0" readonly>
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="increment('irmaos')">+</button>
+                                                      </div>
+                                                  </div>
+                                                  <div class="mb-3">
+                                                      <label for="irmas" class="form-label">Irmãs</label>
+                                                      <div class="input-group">
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="decrement('irmas')">-</button>
+                                                          <input type="number" class="form-control text-center" id="irmas" value="0" readonly>
+                                                          <button type="button" class="btn btn-outline-secondary" onclick="increment('irmas')">+</button>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="tipo-encarregado" id="enc-local-radio" value="local">
-                            <label class="form-check-label" for="enc-local-radio">Local</label>
+
+                          <!-- Observações -->
+                          <div class="mb-3">
+                              <label class="form-label">Observações</label>
+                              <textarea class="form-control" id="observacoes" rows="4"></textarea>
                           </div>
-                        </div>
-                        <button type="button" class="btn btn-primary" id="add-encarregado-btn">Adicionar</button>
                       </div>
-                      <ul class="list-group mt-2" id="encarregados-list"></ul>
-                    </div>
-
-                    <!-- Examinadoras -->
-                    <div class="mb-3">
-                      <label class="form-label">Examinadoras</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control" id="examinadora-input">
-                        <button type="button" class="btn btn-primary" id="add-examinadora-btn">Adicionar</button>
-                      </div>
-                      <ul class="list-group mt-2" id="examinadoras-list"></ul>
-                    </div>
-
-                    <!-- Observações -->
-                    <div class="mb-3">
-                      <label class="form-label">Observações</label>
-                      <textarea class="form-control" id="observacoes" rows="4"></textarea>
-                    </div>
                   </div>
-                </div>
               </div>
             </div>
 
             <!-- Botões de ação -->
             <div class="d-grid gap-2 mt-3">
-              <button type="button" class="btn btn-primary" onclick="salvarEnsaio()">Salvar Ensaio</button>
+              <div id="status-message" class="alert alert-info d-none">Carregando dados...</div>
+              <button type="button" id="salvar-ensaio" class="btn btn-primary" onclick="salvarEnsaio()">Salvar Ensaio</button>
               <a href="eventos.html" class="btn btn-secondary">Cancelar</a>
             </div>
           </div>
